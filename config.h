@@ -14,13 +14,9 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const unsigned int gappx     = 10;        /* gaps between windows */
 static const char *fonts[]          = { "Iosevka Nerd Font:size=11" };
 static const char dmenufont[]       = "Iosevka Nerd Font:size=11";
-static const char col_copper[]      = "#B1624E";
-static const char col_agedcp[]      = "#5CC8D7";
-static const char col_black[]       = "#04060F";
-static const char col_darkturq[]   = "#03353E";
-static const char col_turq[]        = "#0294A5";
-static const char col_gray[]        = "#A79C93";
-static const char col_red[]         = "#C1403D";
+static const char mikado[]          = "#FEC901";
+static const char black[] 	    = "#333333";
+static const char white[] 	    = "#FFFFFF";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -28,13 +24,13 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_copper },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_agedcp  },
-	[SchemeStatus]  = { col_gray, col_darkturq,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { col_black, col_red,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-	[SchemeTagsNorm]  = { col_black, col_gray,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-	[SchemeInfoSel]  = { col_black, col_turq,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-	[SchemeInfoNorm]  = { col_gray, col_darkturq,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeNorm] = { col_gray3, col_gray1, black },
+	[SchemeSel]  = { col_gray4, col_cyan,  mikado  },
+	[SchemeStatus]  = { white, black,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { black, mikado,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+	[SchemeTagsNorm]  = { mikado, black,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeInfoSel]  = { black, mikado,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+	[SchemeInfoNorm]  = { mikado, black,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
@@ -131,6 +127,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+        { MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} },
 };
 
 /* button definitions */
