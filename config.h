@@ -15,6 +15,7 @@ static const unsigned int gappx     = 10;        /* gaps between windows */
 static const char *fonts[]          = { "Iosevka Nerd Font:size=11" };
 static const char dmenufont[]       = "Iosevka Nerd Font:size=11";
 static const char mikado[]          = "#FEC901";
+static const char dark_mikado[]     = "#FF9C0C";
 static const char black[] 	    = "#333333";
 static const char white[] 	    = "#FFFFFF";
 static const char col_gray1[]       = "#222222";
@@ -25,7 +26,7 @@ static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, black },
-	[SchemeSel]  = { col_gray4, col_cyan,  mikado  },
+	[SchemeSel]  = { col_gray4, col_cyan,  dark_mikado  },
 	[SchemeStatus]  = { white, black,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { black, mikado,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
 	[SchemeTagsNorm]  = { mikado, black,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
