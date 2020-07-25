@@ -19,10 +19,9 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 8;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "Iosevka Nerd Font:size=11" };
+static const char *fonts[]         = { "Iosevka Nerd Font:size=11" };
 static const char dmenufont[]       = "Iosevka Nerd Font:size=11";
 static const char mikado[]          = "#FEC901";
-static const char dark_mikado[]     = "#FF9C0C";
 static const char black[] 	    = "#333333";
 static const char white[] 	    = "#FFFFFF";
 static const char col_gray1[]       = "#222222";
@@ -40,9 +39,6 @@ static const char *colors[][3]      = {
 	[SchemeInfoSel]  = { black, mikado,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
 	[SchemeInfoNorm]  = { mikado, black,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
-static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -52,12 +48,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Brave",   NULL,     NULL,           0,         0,          0,          -1,        -1 },
-	{ "Discord", NULL,     NULL,           1 << 8,         0,          0,          -1,        -1 },
+	/* class              instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",             NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Brave",            NULL,     NULL,           0,         0,          0,          -1,        -1 },
+	{ "Discord",          NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "st-256color",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	{ NULL,               NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -91,12 +87,15 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-F", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL};
 static const char *termcmd[]  = { "st", NULL };
+static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+2%",     NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-2%",     NULL };
+static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ControlMask,           XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_n,      switchcol,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -110,8 +109,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
 	//{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[5] } },
@@ -125,9 +124,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                            XF86XK_AudioMute, spawn, {.v = mutevol } },
+	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -138,7 +137,13 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-        { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+    { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+
+    { MODKEY,                       XK_w,      spawn,          SHCMD("$BROWSER")},
+    { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("flameshot gui -p $HOME/md/pictures/screenshots") },
+    { 0,                            XK_Print,  spawn,          SHCMD("flameshot full -c -p $HOME/md/pictures/screenshots") },
+    { MODKEY,                       XK_n,      spawn,          SHCMD("st -e $HOME/.config/vifm/scripts/vifmrun") },
+    { MODKEY,                       XK_v,      spawn,          SHCMD("st -e vi") },
 };
 
 /* button definitions */
@@ -148,7 +153,7 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+    { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
